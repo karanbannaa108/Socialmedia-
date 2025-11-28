@@ -14,98 +14,100 @@
             min-height:100vh;
             background:linear-gradient(135deg,#0f0f1e,#1a1a2e);
             position:relative;
-            overflow-x:hidden;
         }
 
-        /* Home Button - Fixed Top Left */
+        /* Home Button */
         .home-btn{
             position:fixed;top:20px;left:20px;
             background:rgba(255,255,255,0.12);
             backdrop-filter:blur(15px);
             border:1px solid rgba(255,255,255,0.2);
-            width:58px;height:58px;
+            width:60px;height:60px;
             border-radius:50%;
             display:flex;align-items:center;justify-content:center;
             cursor:pointer;z-index:9999;
-            font-size:1.6rem;font-weight:700;
-            transition:all 0.4s ease;
-            box-shadow:0 10px 30px rgba(0,0,0,0.5);
+            font-size:1.7rem;font-weight:700;
+            transition:0.4s;
+            box-shadow:0 12px 32px rgba(0,0,0,0.5);
         }
         .home-btn:hover{
             background:#8b5cf6;
-            transform:scale(1.15) rotate(12deg);
-            box-shadow:0 15px 40px rgba(139,92,246,0.5);
+            transform:scale(1.2);
         }
 
         .container{
             max-width:460px;
             margin:0 auto;
-            padding:110px 20px 80px;
+            padding:120px 20px 80px;
             text-align:center;
         }
         .title{
-            font-size:3.4rem;
+            font-size:3.6rem;
             font-weight:900;
-            margin-bottom:10px;
+            margin-bottom:12px;
             background:linear-gradient(135deg,#c084fc,#818cf8);
             -webkit-background-clip:text;
             -webkit-text-fill-color:transparent;
-            letter-spacing:-1px;
         }
         .subtitle{
-            font-size:1.15rem;
+            font-size:1.2rem;
             opacity:0.85;
-            margin-bottom:55px;
-            font-weight:500;
+            margin-bottom:60px;
         }
 
         .links{
             display:flex;
             flex-direction:column;
-            gap:22px;
+            gap:24px;
         }
         .btn{
             background:rgba(255,255,255,0.08);
             backdrop-filter:blur(20px);
             border:1px solid rgba(255,255,255,0.15);
-            border-radius:26px;
-            padding:24px 20px;
+            border-radius:28px;
+            padding:26px 20px;
             display:flex;
             align-items:center;
+            justify-content:center;
             gap:20px;
             text-decoration:none;
             color:#fff;
-            font-weight:600;
-            font-size:1.2rem;
-            transition:all 0.45s cubic-bezier(0.4,0,0.2,1);
+            font-weight:700;
+            font-size:1.3rem;
+            transition:all 0.45s ease;
             position:relative;
             overflow:hidden;
+            box-shadow:0 10px 30px rgba(0,0,0,0.3);
         }
         .btn::before{
             content:'';position:absolute;top:0;left:-100%;
             width:100%;height:100%;
-            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
             transition:0.8s;
         }
         .btn:hover::before{left:100%;}
         .btn:hover{
-            transform:translateY(-10px);
-            border-color:#c084fc;
-            box-shadow:0 25px 50px rgba(139,92,246,0.35);
+            transform:translateY(-12px);
+            box-shadow:0 30px 60px rgba(139,92,246,0.4);
         }
         .btn img{
-            width:48px;
-            height:48px;
-            transition:transform 0.3s;
+            width:52px;
+            height:52px;
+            transition:0.4s;
         }
-        .btn:hover img{
-            transform:scale(1.2) rotate(8deg);
-        }
+        .btn:hover img{transform:scale(1.25) rotate(10deg);}
+
+        /* अलग-अलग बटन कलर */
+        .instagram:hover{border-color:#e4405f !important;box-shadow:0 30px 60px rgba(228,64,95,0.4)!important;}
+        .youtube:hover{border-color:#ff0000 !important;box-shadow:0 30px 60px rgba(255,0,0,0.4)!important;}
+        .telegram:hover{border-color:#0088cc !important;box-shadow:0 30px 60px rgba(0,136,204,0.4)!important;}
+        .discord:hover{border-color:#5865f2 !important;box-shadow:0 30px 60px rgba(88,101,242,0.4)!important;}
+        .whatsapp:hover{border-color:#25d366 !important;box-shadow:0 30px 60px rgba(37,211,102,0.4)!important;}
+        .facebook:hover{border-color:#1877f2 !important;box-shadow:0 30px 60px rgba(24,119,242,0.4)!important;}
 
         @media(max-width:480px){
-            .title{font-size:2.8rem;}
-            .home-btn{width:52px;height:52px;font-size:1.4rem;}
-            .btn{font-size:1.1rem;padding:20px;}
+            .title{font-size:2.9rem;}
+            .btn{font-size:1.15rem;padding:22px;}
         }
     </style>
 </head>
@@ -118,30 +120,30 @@
 
     <div class="container">
         <h1 class="title">KaranZeroDay</h1>
-        <p class="subtitle">All My Links • Hindi Tech Creator</p>
+        <p class="subtitle">All My Socials • One Click Away</p>
 
         <div class="links">
-            <a href="https://www.instagram.com/karanzeroday" target="_blank" class="btn">
+            <a href="https://www.instagram.com/karanzeroday" target="_blank" class="btn instagram">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/instagram.svg" alt="Instagram">
                 Instagram
             </a>
-            <a href="https://youtube.com/@karanzeroday" target="_blank" class="btn">
+            <a href="https://youtube.com/@karanzeroday" target="_blank" class="btn youtube">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg" alt="YouTube">
                 YouTube
             </a>
-            <a href="https://t.me/karanbannaa108" target="_blank" class="btn">
+            <a href="https://t.me/karanbannaa108" target="_blank" class="btn telegram">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg" alt="Telegram">
                 Telegram
             </a>
-            <a href="https://discord.gg/868fvsVWh" target="_blank" class="btn">
+            <a href="https://discord.gg/868fvsVWh" target="_blank" class="btn discord">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="Discord">
                 Discord
             </a>
-            <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="btn">
+            <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="btn whatsapp">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/whatsapp.svg" alt="WhatsApp">
                 WhatsApp Channel
             </a>
-            <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="btn">
+            <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="btn facebook">
                 <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/facebook.svg" alt="Facebook">
                 Facebook
             </a>
