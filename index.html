@@ -6,16 +6,14 @@
     <title>KaranZeroDay Bot Hosting</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;}
+        :root{--bg:#0a0a0f;--accent:#8b5cf6;}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:20px;}
-        .header{text-align:center;padding:50px 0;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
+        .header{text-align:center;padding:50px 0;}
         h1{font-size:3.8rem;font-weight:900;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .container{max-width:1000px;margin:0 auto;}
-        .dash{background:var(--card);border-radius:28px;padding:40px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 25px 60px rgba(0,0,0,0.6);}
+        .dash{background:#11111a;border-radius:28px;padding:40px;max-width:900px;margin:0 auto;border:1px solid rgba(255,255,255,0.08);box-shadow:0 25px 60px rgba(0,0,0,0.6);}
         .upload{border:3px dashed var(--accent);border-radius:24px;padding:60px;text-align:center;cursor:pointer;transition:0.4s;margin-bottom:30px;}
         .upload:hover{background:rgba(139,92,246,0.15);}
-        input[type="file"]{display:none;}
         .controls{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:35px 0;}
         .btn{background:var(--accent);padding:18px 40px;border-radius:50px;cursor:pointer;font-weight:700;transition:0.4s;}
         .btn.stop{background:#ef4444;}.btn.restart{background:#f59e0b;}
@@ -28,26 +26,23 @@
 <body>
     <div class="header">
         <h1>KaranZeroDay</h1>
-        <p>Free 24/7 Python Bot Hosting • ZIP Upload • Real Server</p>
+        <p>Free 24/7 Python Bot Hosting • ZIP Upload</p>
     </div>
-    <div class="container">
-        <div class="dash">
-            <div class="upload" onclick="document.getElementById('zip').click()">
-                <h3>Upload Bot ZIP</h3>
-                <p>main.py • bot.py • nm.py • index.py • start.py</p>
-                <input type="file" id="zip" accept=".zip">
-                <p id="name" style="margin-top:15px;">No file selected</p>
-            </div>
-
-            <div class="controls">
-                <div class="btn" onclick="upload()">Upload & Run</div>
-                <div class="btn stop" onclick="stop()">Stop</div>
-                <div class="btn restart" onclick="restart()">Restart</div>
-            </div>
-
-            <div class="status">Status: <span id="status" class="offline">Offline</span></div>
-            <div class="console" id="log">> Ready...</div>
+    <div class="dash">
+        <div class="upload" onclick="document.getElementById('zip').click()">
+            <h3>Upload Bot ZIP (No Password)</h3>
+            <input type="file" id="zip" accept=".zip">
+            <p id="name">No file selected</p>
         </div>
+
+        <div class="controls">
+            <div class="btn" onclick="upload()">Upload & Run</div>
+            <div class="btn stop" onclick="stop()">Stop</div>
+            <div class="btn restart" onclick="restart()">Restart</div>
+        </div>
+
+        <div class="status">Status: <span id="status" class="offline">Offline</span></div>
+        <div class="console" id="log">> Ready... Upload normal ZIP (no password)</div>
     </div>
 
     <script>
@@ -67,7 +62,8 @@
         }
 
         async function upload(){
-            if(!fileInput.files[0]) return alert("ZIP select karo pehle!");
+            if(!fileInput.files[0]) return alert("ZIP select karo!");
+
             const form = new FormData();
             form.append('zip', fileInput.files[0]);
             log("Uploading ZIP...");
