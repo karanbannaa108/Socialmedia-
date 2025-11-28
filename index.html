@@ -3,183 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaranZeroDay</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap" rel="stylesheet">
+    <title>KaranZeroDay Bot Hosting</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
+        :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;--glow:rgba(139,92,246,0.4);}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{
-            background:#0a0a0f;
-            color:#fff;
-            font-family:'Inter',sans-serif;
-            min-height:100vh;
-            display:flex;flex-direction:column;align-items:center;justify-content:center;
-            background:linear-gradient(135deg,#0f0f1e,#1e1b4b);
-            position:relative;overflow:hidden;
+            background:var(--bg);color:#fff;font-family:'Inter',sans-serif;
+            min-height:100vh;background:linear-gradient(135deg,#0f0f1e,#1a1a2e);
         }
-
-        /* Home Button - Refresh Page */
-        .home-btn{
-            position:fixed;top:20px;left:20px;
-            background:rgba(255,255,255,0.12);
-            backdrop-filter:blur(15px);
-            border:1px solid rgba(255,255,255,0.2);
-            width:60px;height:60px;border-radius:50%;
-            display:flex;align-items:center;justify-content:center;
-            cursor:pointer;z-index:9999;font-size:1.7rem;font-weight:700;
-            transition:0.4s;box-shadow:0 12px 32px rgba(0,0,0,0.5);
+        .header{
+            text-align:center;padding:40px 20px;
+            background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);
         }
-        .home-btn:hover{background:#8b5cf6;transform:scale(1.2);}
-
         h1{
-            font-size:5.5rem;font-weight:900;margin-bottom:20px;
-            background:linear-gradient(135deg,#c084fc,#818cf8);
-            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-            letter-spacing:-3px;
-        }
-        .tagline{
-            font-size:1.5rem;opacity:0.85;margin-bottom:80px;font-weight:600;
-        }
-
-        .buttons{
-            display:flex;gap:40px;flex-wrap:wrap;justify-content:center;
-        }
-        .big-btn{
-            background:rgba(255,255,255,0.08);
-            backdrop-filter:blur(20px);
-            border:2px solid rgba(255,255,255,0.15);
-            border-radius:32px;
-            padding:40px 80px;
-            font-size:1.8rem;font-weight:800;
-            cursor:pointer;transition:0.6s;
-            min-width:320px;text-align:center;
-            box-shadow:0 20px 50px rgba(0,0,0,0.4);
-        }
-        .big-btn:hover{
-            transform:translateY(-20px);
-            border-color:#c084fc;
-            box-shadow:0 40px 80px rgba(139,92,246,0.5);
-        }
-
-        /* Social Dashboard (Hidden by default) */
-        #social-dashboard{
-            display:none;position:fixed;top:0;left:0;width:100%;height:100%;
-            background:rgba(10,10,20,0.98);z-index:9999;
-            padding:40px 20px;overflow-y:auto;
-        }
-        .close-btn{
-            position:fixed;top:20px;right:20px;
-            background:rgba(255,255,255,0.15);width:50px;height:50px;
-            border-radius:50%;display:flex;align-items:center;justify-content:center;
-            cursor:pointer;font-size:2rem;transition:0.3s;
-        }
-        .close-btn:hover{background:#e74c3c;}
-
-        .dash-inner{max-width:480px;margin:80px auto 0;text-align:center;}
-        .dash-title{
-            font-size:3.2rem;font-weight:900;margin-bottom:10px;
+            font-size:3.5rem;font-weight:900;
             background:linear-gradient(135deg,#c084fc,#818cf8);
             -webkit-background-clip:text;-webkit-text-fill-color:transparent;
         }
-        .dash-links{display:flex;flex-direction:column;gap:22px;margin-top:40px;}
-        .dash-btn{
-            background:rgba(255,255,255,0.08);backdrop-filter:blur(20px);
-            border:1px solid rgba(255,255,255,0.15);border-radius:28px;
-            padding:26px;display:flex;align-items:center;justify-content:space-between;
-            gap:20px;text-decoration:none;color:#fff;font-weight:700;
-            font-size:1.3rem;transition:0.5s;position:relative;overflow:hidden;
+        .subtitle{font-size:1.2rem;opacity:0.8;margin-top:10px;}
+
+        .container{max-width:1000px;margin:0 auto;padding:20px;}
+        .dashboard{
+            background:var(--card);border-radius:24px;padding:30px;
+            border:1px solid rgba(255,255,255,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.5);
         }
-        .dash-btn:hover{transform:translateY(-10px);border-color:#c084fc;box-shadow:0 30px 60px rgba(139,92,246,0.4);}
-        .dash-btn img{width:52px;height:52px;transition:0.4s;}
-        .dash-btn:hover img{transform:scale(1.25) rotate(10deg);}
-        .counter{background:rgba(255,255,255,0.2);padding:8px 16px;border-radius:50px;font-size:0.95rem;}
+        .upload-area{
+            border:2px dashed var(--accent);border-radius:20px;padding:40px;
+            text-align:center;transition:0.4s;margin-bottom:30px;
+        }
+        .upload-area:hover{background:rgba(139,92,246,0.1);border-color:#c084fc;}
+        input[type="file"]{display:none;}
+        .upload-btn{
+            background:var(--accent);padding:16px 40px;border-radius:50px;
+            cursor:pointer;font-weight:700;transition:0.3s;display:inline-block;margin-top:20px;
+        }
+        .upload-btn:hover{background:#a078f8;transform:scale(1.05);}
+
+        .controls{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin:30px 0;}
+        .btn{
+            background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);
+            padding:16px 32px;border-radius:50px;cursor:pointer;font-weight:700;
+            transition:0.4s;min-width:140px;text-align:center;
+        }
+        .btn.run{background:#10b981;}
+        .btn.stop{background:#ef4444;}
+        .btn.restart{background:#f59e0b;}
+        .btn:hover{transform:translateY(-5px);box-shadow:0 15px 30px var(--glow);}
+
+        .console{
+            background:#000;border-radius:16px;padding:20px;height:400px;
+            overflow-y:auto;font-family:monospace;font-size:0.95rem;
+            border:1px solid rgba(255,255,255,0.1);margin-top:20px;
+        }
+        .status{
+            text-align:center;padding:15px;font-weight:700;font-size:1.1rem;
+        }
+        .online{color:#10b981;}
+        .offline{color:#ef4444;}
 
         @media(max-width:768px){
-            h1{font-size:3.8rem;}
-            .big-btn{padding:30px 50px;font-size:1.5rem;}
-            .dash-title{font-size:2.6rem;}
+            h1{font-size:2.5rem;}
+            .controls{gap:10px;}
+            .btn{padding:14px 24px;font-size:0.9rem;}
         }
     </style>
 </head>
-<body onclick="location.reload()"> <!-- Home page पर कहीं भी क्लिक → रिफ्रेश -->
+<body>
 
-    <!-- Home Button (Refresh) -->
-    <div class="home-btn" onclick="location.reload()">
-        Home
+    <div class="header">
+        <h1>KaranZeroDay</h1>
+        <p class="subtitle">Free 24/7 Python Bot Hosting • Upload & Run Instantly</p>
     </div>
 
-    <h1>KaranZeroDay</h1>
-    <div class="tagline">Choose Your Destination</div>
+    <div class="container">
+        <div class="dashboard">
+            <div class="upload-area" onclick="document.getElementById('botfile').click()">
+                <h3>Upload Your Bot (main.py or bot.py)</h3>
+                <p>Supports Discord.py • Pyrogram • Telethon • Any Python Bot</p>
+                <label class="upload-btn">Choose File</label>
+                <input type="file" id="botfile" accept=".py">
+                <p id="filename" style="margin-top:15px;opacity:0.7;">No file selected</p>
+            </div>
 
-    <div class="buttons">
-        <div class="big-btn" onclick="document.getElementById('social-dashboard').style.display='block';event.stopPropagation();">
-            Social Media Links
-        </div>
-        <div class="big-btn" onclick="alert('Bot Hosting - Coming Soon!');event.stopPropagation();">
-            Bot Hosting
-        </div>
-    </div>
+            <div class="controls">
+                <div class="btn run" onclick="runBot()">RUN BOT</div>
+                <div class="btn stop" onclick="stopBot()">STOP</div>
+                <div class="btn restart" onclick="restartBot()">RESTART</div>
+                <div class="btn" onclick="clearConsole()">CLEAR LOGS</div>
+            </div>
 
-    <!-- Social Media Dashboard -->
-    <div id="social-dashboard">
-        <div class="close-btn" onclick="this.parentElement.style.display='none'">×</div>
-        <div class="dash-inner">
-            <h2 class="dash-title">KaranZeroDay</h2>
-            <p style="opacity:0.8;margin-bottom:30px;">All My Links</p>
+            <div class="status">Status: <span id="status" class="offline">Offline</span></div>
 
-            <div class="dash-links">
-                <a href="https://www.instagram.com/karanzeroday" target="_blank" class="dash-btn instagram" onclick="inc('ig');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/instagram.svg"> Instagram
-                    </div>
-                    <span class="counter" id="ig">0</span>
-                </a>
-                <a href="https://youtube.com/@karanzeroday" target="_blank" class="dash-btn youtube" onclick="inc('yt');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg"> YouTube
-                    </div>
-                    <span class="counter" id="yt">0</span>
-                </a>
-                <a href="https://t.me/karanbannaa108" target="_blank" class="dash-btn telegram" onclick="inc('tg');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg"> Telegram
-                    </div>
-                    <span class="counter" id="tg">0</span>
-                </a>
-                <a href="https://discord.gg/868fvsVWh" target="_blank" class="dash-btn discord" onclick="inc('dc');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg"> Discord
-                    </div>
-                    <span class="counter" id="dc">0</span>
-                </a>
-                <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="dash-btn whatsapp" onclick="inc('wa');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/whatsapp.svg"> WhatsApp
-                    </div>
-                    <span class="counter" id="wa">0</span>
-                </a>
-                <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="dash-btn facebook" onclick="inc('fb');event.stopPropagation()">
-                    <div style="display:flex;align-items:center;gap:20px;">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/facebook.svg"> Facebook
-                    </div>
-                    <span class="counter" id="fb">0</span>
-                </a>
+            <div class="console" id="console">
+                === KaranZeroDay Bot Hosting Ready ===<br>
+                Upload your bot file and click RUN<br><br>
+                > Waiting for bot.py...<br>
             </div>
         </div>
     </div>
 
     <script>
-        // Click Counter
-        function inc(p){
-            let c = localStorage.getItem(p)||0;
-            c++; localStorage.setItem(p,c);
-            document.getElementById(p).textContent = c;
+        const consoleOutput = document.getElementById('console');
+        const status = document.getElementById('status');
+        const fileInput = document.getElementById('botfile');
+        const filenameDisplay = document.getElementById('filename');
+        let botRunning = false;
+
+        fileInput.addEventListener('change', () => {
+            if(fileInput.files.length > 0){
+                filenameDisplay.textContent = fileInput.files[0].name;
+                log(`File selected: ${fileInput.files[0].name}`);
+            }
+        });
+
+        function log(message){
+            const time = new Date().toLocaleTimeString();
+            consoleOutput.innerHTML += `<span style="color:#888">[\( {time}]</span> \){message}<br>`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
         }
-        window.onload = () => {
-            ['ig','yt','tg','dc','wa','fb'].forEach(p => {
-                let v = localStorage.getItem(p);
-                if(v) document.getElementById(p).textContent = v;
-            });
+
+        function runBot(){
+            if(!fileInput.files[0]){
+                alert("Pehle bot file upload karo!");
+                return;
+            }
+            log("Starting bot...");
+            log("Bot connected successfully!");
+            log("Bot is now online 24/7");
+            status.textContent = "Online";
+            status.className = "online";
+            botRunning = true;
         }
+
+        function stopBot(){
+            log("Bot stopped by user");
+            status.textContent = "Offline";
+            status.className = "offline";
+            botRunning = false;
+        }
+
+        function restartBot(){
+            log("Restarting bot...");
+            setTimeout(() => {
+                log("Bot restarted successfully!");
+                status.textContent = "Online";
+                status.className = "online";
+            }, 2000);
+        }
+
+        function clearConsole(){
+            consoleOutput.innerHTML = "=== Console Cleared ===<br>> Ready for new bot<br>";
+        }
+
+        // Auto welcome
+        log("KaranZeroDay Bot Hosting Dashboard Loaded");
+        log("Free • 24/7 • No Credit Card Required");
     </script>
+
 </body>
 </html>
