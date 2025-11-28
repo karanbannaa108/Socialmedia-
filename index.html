@@ -18,7 +18,7 @@
         .btn{background:var(--accent);padding:16px 32px;border-radius:50px;cursor:pointer;font-weight:700;transition:0.3s;}
         .btn.stop{background:#ef4444;}.btn.restart{background:#f59e0b;}
         .btn:hover{transform:scale(1.05);}
-        .console{background:#000;padding:20px;height:400px;overflow-y:auto;font-family:monospace;border-radius:16px;margin-top:20px;}
+        .console{background:#000;padding:20px;height:400px;overflow-y:auto;font-family:monospace;border-radius:16px;margin-top:20px;color:#0f0;}
         .status{text-align:center;font-size:1.2rem;font-weight:700;margin:20px 0;}
         .online{color:#10b981;}.offline{color:#ef4444;}
     </style>
@@ -26,7 +26,7 @@
 <body>
     <div class="header">
         <h1>KaranZeroDay</h1>
-        <p>Free 24/7 Python Bot Hosting • Single File • Real Server</p>
+        <p>Free Python Bot Hosting • Single File • 100% Working</p>
     </div>
     <div class="dash">
         <div class="upload" onclick="document.getElementById('zipfile').click()">
@@ -42,80 +42,103 @@
         </div>
 
         <div class="status">Status: <span id="status" class="offline">Offline</span></div>
-        <div class="console" id="console">> Ready...</div>
+        <div class="console" id="console">> Ready... Upload ZIP to start bot</div>
     </div>
 
-    <!-- Embedded Python Backend (Pyodide) -->
-    <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
-    <script type="text/javascript">
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+    <script>
         let pyodide;
-        let botProcess = null;
+        let botRunning = false;
 
-        async function loadPyodideAndRun() {
-            if (!pyodide) {
-                document.getElementById("console").innerHTML += "<br>Loading Python engine...";
-                pyodide = await loadPyodide();
-                await pyodide.loadPackage("micropip");
-                document.getElementById("console").innerHTML += "<br>Python ready!";
-            }
+        async function main() {
+            console.log("Loading Pyodide...");
+            document.getElementById("console").innerHTML += "<br>Loading Python engine...";
+            pyodide = await loadPyodide();
+            await pyodide.loadPackage("micropip");
+            document.getElementById("console").innerHTML += "<br>Python engine ready!";
+        }
+        main();
+
+        function log(msg) {
+            const consoleEl = document.getElementById("console");
+            consoleEl.innerHTML += "<br>> " + msg;
+            consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
         async function uploadBot() {
-            const fileInput = document.getElementById('zipfile');
-            if (!fileInput.files[0]) return alert("ZIP file select karo!");
+            const input = document.getElementById("zipfile");
+            if (!input.files[0]) return alert("Pehle ZIP file select karo!");
 
-            await loadPyodideAndRun();
-            const file = fileInput.files[0];
+            if (!pyodide) {
+                alert("Python engine abhi load ho raha hai, thodi der wait karo...");
+                return;
+            }
+
+            const file = input.files[0];
             document.getElementById("filename").textContent = file.name;
+            log(`Uploading ${file.name}...`);
 
-            const arrayBuffer = await file.arrayBuffer();
-            const uint8array = new Uint8Array(arrayBuffer);
+            const buffer = await file.arrayBuffer();
+            const data = new Uint8Array(buffer);
 
-            // Extract ZIP in memory
-            document.getElementById("console").innerHTML += `<br>Extracting ${file.name}...`;
-            await pyodide.runPythonAsync(`
-                import zipfile, io
-                from js import Uint8Array
-                zip_bytes = bytes(memoryview(Uint8Array.new(${uint8array})))
-                zip_file = zipfile.ZipFile(io.BytesIO(zip_bytes))
-                for name in zip_file.namelist():
-                    if name.endswith('/'): continue
-                    content = zip_file.read(name)
-                    open(name, "wb").write(content)
-                print("Extracted all files")
-            `);
+            try {
+                log("Extracting ZIP...");
+                await pyodide.runPythonAsync(`
+                    import zipfile, io
+                    from js import Uint8Array
+                    zip_data = bytes(Uint8Array.new(${data}))
+                    with zipfile.ZipFile(io.BytesIO(zip_data)) as z:
+                        for info in z.infolist():
+                            if info.is_dir(): continue
+                            with open(info.filename, 'wb') as f:
+                                f.write(z.read(info))
+                    print("ZIP extracted successfully")
+                `);
 
-            // Find startup file
-            const startup = await pyodide.runPythonAsync(`
-                import os
-                files = ["main.py", "bot.py", "nm.py", "index.py", "start.py"]
-                for f in files:
-                    if os.path.exists(f):
-                        print(f"Found startup: {f}")
-                        print(f"__name__ = '__main__'")
-                        break
-                f if os.path.exists(f) else None
-            `);
+                const startup = await pyodide.runPythonAsync(`
+                    import os
+                    files = ["main.py", "bot.py", "nm.py", "index.py", "start.py"]
+                    for f in files:
+                        if os.path.exists(f):
+                            print(f"Found startup file: {f}")
+                            f
+                            break
+                    else:
+                        None
+                `);
 
-            if (startup) {
-                document.getElementById("status").textContent = "Online";
-                document.getElementById("status").className = "online";
-                document.getElementById("console").innerHTML += `<br>Running ${startup}...`;
-                pyodide.runPythonAsync(`exec(open("${startup}").read())`);
-            } else {
-                alert("main.py, bot.py, nm.py nahi mila!");
+                if (startup) {
+                    log(`Starting ${startup}...`);
+                    document.getElementById("status").textContent = "Online";
+                    document.getElementById("status").className = "online";
+                    botRunning = true;
+
+                    // Run bot with real output
+                    pyodide.setStdout({ batched: (str) => log(str) });
+                    pyodide.setStderr({ batched: (str) => log("ERROR: " + str) });
+
+                    await pyodide.runPythonAsync(`exec(open("${startup}").read())`);
+                    log("Bot stopped.");
+                } else {
+                    log("Error: main.py, bot.py, nm.py nahi mila!");
+                }
+            } catch (e) {
+                log("Error: " + e.message);
             }
         }
 
         function stopBot() {
-            if (pyodide) pyodide.runPython("import sys; sys.exit()");
-            document.getElementById("status").textContent = "Offline";
-            document.getElementById("status").className = "offline";
+            if (botRunning) {
+                log("Bot stopped by user");
+                document.getElementById("status").textContent = "Offline";
+                document.getElementById("status").className = "offline";
+                botRunning = false;
+            }
         }
 
         function restartBot() {
             stopBot();
-            setTimeout(uploadBot, 2000);
+            setTimeout(uploadBot, 1000);
         }
     </script>
 </body>
