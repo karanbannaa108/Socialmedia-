@@ -1,230 +1,101 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karan ZeroDay - Hindi Tech YouTuber | Best Phones & Reviews</title>
-    <meta name="description" content="Karan ZeroDay - Free Fire tips & tricks">
-    
-    <!-- Open Graph -->
-    <meta property="og:title" content="KaranZeroDay - Hindi Tech YouTuber">
-    <meta property="og:description" content="Best Quality Gaming Videos EveryDay">
-    <meta property="og:image" content="https://i.ibb.co.com/0jG4XhK/karanzeroday-og.jpg">
-    <meta property="og:url" content="https://karanzeroday.in">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>Karan ZeroDay</title>
     <style>
-        :root {
-            --bg: #0d0d1f;
-            --card: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.08);
-            --accent: #c084fc;
-            --accent2: #818cf8;
-            --text: #f1f5f9;
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            background:#0d0d1f;
+            color:#fff;
+            font-family:'Inter',sans-serif;
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+            align-items:center;
+            justify-content:center;
+            gap:80px;
+            padding:40px 20px;
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(120, 80, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.15) 0%, transparent 50%);
+        h1{
+            font-size:5.5rem;
+            font-weight:900;
+            background:linear-gradient(135deg,#c084fc,#818cf8);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            letter-spacing:-3px;
         }
-        .container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
-
-        /* Header */
-        header {
-            padding: 30px 0;
-            display: flex;
-            justify-content: flex-end;
+        .links{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+            gap:32px;
+            max-width:1000px;
+            width:100%;
         }
-        .lang-toggle {
-            background: rgba(255,255,255,0.08);
-            border: 1px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
+        .link{
+            background:rgba(255,255,255,0.05);
+            backdrop-filter:blur(16px);
+            border:1px solid rgba(255,255,255,0.1);
+            border-radius:20px;
+            padding:32px 20px;
+            text-align:center;
+            transition:0.4s;
+            cursor:pointer;
         }
-        .lang-toggle:hover { background: rgba(192,132,252,0.2); border-color: var(--accent); }
-
-        /* Hero */
-        .hero {
-            text-align: center;
-            padding: 120px 20px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .link:hover{
+            transform:translateY(-16px);
+            box-shadow:0 24px 48px rgba(192,132,252,0.25);
+            border-color:#c084fc;
         }
-        .hero h1 {
-            font-size: 6.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
-            letter-spacing: -2px;
+        .link img{
+            width:80px;
+            height:80px;
+            margin-bottom:16px;
+            transition:0.3s;
         }
-        .hero p {
-            font-size: 2rem;
-            font-weight: 500;
-            font-family: 'Hind Siliguri', sans-serif;
-            opacity: 0.9;
+        .link:hover img{transform:scale(1.2);}
+        .link span{
+            font-size:1.3rem;
+            font-weight:600;
         }
-
-        /* About */
-        .about {
-            text-align: center;
-            padding: 100px 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            font-family: 'Hind Siliguri', sans-serif;
-            font-size: 1.4rem;
-            line-height: 2;
-            opacity: 0.95;
-        }
-
-        /* Social Section */
-        .social-section {
-            padding: 120px 20px;
-        }
-        .social-section h2 {
-            text-align: center;
-            font-size: 3.5rem;
-            margin-bottom: 80px;
-            background: linear-gradient(135deg, var(--accent), var(--accent2));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 32px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .social-card {
-            background: var(--card);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px 20px;
-            text-align: center;
-            border: 1px solid var(--border);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        .social-card:hover {
-            transform: translateY(-24px) scale(1.05);
-            box-shadow: 0 32px 64px rgba(192, 132, 252, 0.25);
-            border: 1px solid var(--accent);
-        }
-        .social-card img {
-            width: 96px;
-            height: 96px;
-            margin-bottom: 24px;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
-            transition: transform 0.4s ease;
-        }
-        .social-card:hover img { transform: scale(1.2) rotate(6deg); }
-        .social-card p {
-            font-size: 1.4rem;
-            font-weight: 600;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 80px 20px;
-            font-size: 1rem;
-            opacity: 0.7;
-            font-family: 'Hind Siliguri', sans-serif;
-        }
-
-        /* Language */
-        [data-lang="en"] { display: none; }
-        body.lang-hi [data-lang="hi"] { display: block; }
-        body.lang-hi [data-lang="en"] { display: none; }
-        body.lang-en [data-lang="en"] { display: block; }
-        body.lang-en [data-lang="hi"] { display: none; }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 4rem; }
-            .hero p { font-size: 1.5rem; }
-            .social-section h2 { font-size: 2.5rem; }
+        @media(max-width:768px){
+            h1{font-size:3.8rem;}
+            .links{grid-template-columns:repeat(2,1fr);}
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;900&display=swap" rel="stylesheet">
 </head>
-<body class="lang-hi">
+<body>
 
-<div class="container">
-    <header>
-        <div class="lang-toggle" onclick="toggleLang()">EN</div>
-    </header>
+    <h1>Karan ZeroDay</h1>
 
-    <section class="hero">
-        <h1><span data-lang="hi">करण जीरोडे</span><span data-lang="en">Karan ZeroDay</span></h1>
-        <p><span data-lang="hi">हिंदी टेक यूट्यूबर और कंटेंट क्रिएटर</span><span data-lang="en">Hindi Tech YouTuber & Creator</span></p>
-    </section>
+    <div class="links">
+        <a href="https://www.instagram.com/karanzeroday" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/instagram.svg" alt="Instagram">
+            <span>Instagram</span>
+        </a>
+        <a href="https://youtube.com/@karanzeroday" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg" alt="YouTube">
+            <span>YouTube</span>
+        </a>
+        <a href="https://t.me/karanbannaa108" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg" alt="Telegram">
+            <span>Telegram</span>
+        </a>
+        <a href="https://discord.gg/868fvsVWh" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="Discord">
+            <span>Discord</span>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/whatsapp.svg" alt="WhatsApp">
+            <span>WhatsApp</span>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="link">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/facebook.svg" alt="Facebook">
+            <span>Facebook</span>
+        </a>
+    </div>
 
-    <section class="about">
-        <p>
-            <span data-lang="hi">मैं हिंदी में आसान और मज़ेदार टेक वीडियो बनाता हूँ – बेस्ट फोन रिव्यू, गैजेट अनबॉक्सिंग, हिडन टिप्स & ट्रिक्स, लेटेस्ट टेक न्यूज़ और बहुत कुछ!</span>
-            <span data-lang="en">I create simple, fun & helpful tech videos in Hindi – best phone reviews, gadget unboxing, hidden tips & tricks, latest tech news and more!</span>
-        </p>
-    </section>
-
-    <section class="social-section">
-        <h2><span data-lang="hi">मुझसे जुड़ें</span><span data-lang="en">Connect With Me</span></h2>
-        <div class="grid">
-            <div class="social-card" onclick="window.open('https://www.instagram.com/karanzeroday','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/instagram.svg" alt="Instagram">
-                <p>Instagram</p>
-            </div>
-            <div class="social-card" onclick="window.open('https://youtube.com/@karanzeroday','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg" alt="YouTube">
-                <p>YouTube</p>
-            </div>
-            <div class="social-card" onclick="window.open('https://t.me/karanbannaa108','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg" alt="Telegram">
-                <p>Telegram</p>
-            </div>
-            <div class="social-card" onclick="window.open('https://discord.gg/868fvsVWh','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="Discord">
-                <p>Discord</p>
-            </div>
-            <div class="social-card" onclick="window.open('https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/whatsapp.svg" alt="WhatsApp">
-                <p>WhatsApp</p>
-            </div>
-            <div class="social-card" onclick="window.open('https://www.facebook.com/profile.php?id=61565140307947','_blank')">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/facebook.svg" alt="Facebook">
-                <p>Facebook</p>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>© 2025 Karan ZeroDay — <span data-lang="hi">सभी अधिकार सुरक्षित</span><span data-lang="en">All Rights Reserved</span></p>
-    </footer>
-</div>
-
-<script>
-    function toggleLang() {
-        document.body.classList.toggle('lang-hi');
-        document.body.classList.toggle('lang-en');
-        const btn = document.querySelector('.lang-toggle');
-        btn.textContent = document.body.classList.contains('lang-hi') ? 'EN' : 'हिंदी';
-    }
-</script>
 </body>
 </html>
