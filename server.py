@@ -1,88 +1,86 @@
 from flask import Flask, request, jsonify, send_from_directory
-import os
-import zipfile
-import subprocess
-import threading
-import time
+import os, zipfile, subprocess, threading, time, signal
 
-app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB limit
+app = Flask(__name__, static_folder='.')
 
-bot_process = None
-bot_dir = "user_bot"
+process = None
+bot_folder = "mybot"
 
-def find_startup():
-    files = ["main.py", "bot.py", "nm.py", "index.py", "start.py"]
+def find_main():
+    files = ["main.py","bot.py","nm.py","index.py","start.py"]
     for f in files:
-        if os.path.exists(os.path.join(bot_dir, f)):
+        if os.path.exists(f"mybot/{f}"):
             return f
     return None
 
-def run_bot():
-    global bot_process
-    startup = find_startup()
-    if not startup: return False
-    cmd = ["python", startup]
-    bot_process = subprocess.Popen(cmd, cwd=bot_dir, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    def stream():
-        for line in iter(bot_process.stdout.readline, b''):
-            if line: print("BOT →", line.decode().strip())
-    threading.Thread(target=stream, daemon=True).start()
+def run():
+    global process
+    file = find_main()
+    if not file: return False
+    process = subprocess.Popen(
+        ["python", file], cwd="mybot",
+        stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    )
+    def logs():
+        for line in process.stdout:
+            print("BOT →", line.decode().strip())
+    threading.Thread(target=logs, daemon=True).start()
     return True
 
 @app.route('/')
-def index():
+def home():
     return send_from_directory('.', 'index.html')
 
 @app.route('/upload', methods=['POST'])
 def upload():
-    global bot_process
+    global process
     try:
-        if 'botzip' not in request.files:
-            return jsonify({"success": False, "error": "No file"}), 400
-        file = request.files['botzip']
-        if not file.filename.endswith('.zip'):
-            return jsonify({"success": False, "error": "ZIP only"}), 400
+        if 'zip' not in request.files:
+            return jsonify({"success":False,"error":"No file"}), 400
+        zipf = request.files['zip']
+        if not zipf.filename.endswith('.zip'):
+            return jsonify({"success":False,"error":"ZIP only"}), 400
 
-        if os.path.exists(bot_dir):
-            os.system("rm -rf " + bot_dir)
-        os.makedirs(bot_dir, exist_ok=True)
+        if os.path.exists(bot_folder):
+            os.system("rm -rf mybot")
+        os.makedirs(bot_folder, exist_ok=True)
 
-        zip_path = "temp.zip"
-        file.save(zip_path)
-        with zipfile.ZipFile(zip_path, 'r') as z:
-            z.extractall(bot_dir)
-        os.remove(zip_path)
+        path = "temp.zip"
+        zipf.save(path)
+        with zipfile.ZipFile(path, 'r') as z:
+            z.extractall(bot_folder)
+        os.remove(path)
 
-        req = os.path.join(bot_dir, "requirements.txt")
+        req = "mybot/requirements.txt"
         if os.path.exists(req):
-            os.system(f"pip install -r {req}")
+            os.system(f"pip install -r {req} --quiet")
 
-        if bot_process:
-            bot_process.kill()
+        if process:
+            process.kill()
+        time.sleep(1)
 
-        startup = find_startup()
-        if startup and run_bot():
-            return jsonify({"success": True, "startup": startup})
+        main_file = find_main()
+        if main_file and run():
+            return jsonify({"success":True, "file":main_file})
         else:
-            return jsonify({"success": False, "error": "No main.py/bot.py found"}), 400
+            return jsonify({"success":False,"error":"No main.py/bot.py found"}), 400
     except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+        return jsonify({"success":False,"error":str(e)}), 500
 
 @app.route('/stop')
 def stop():
-    global bot_process
-    if bot_process:
-        bot_process.kill()
+    global process
+    if process:
+        process.kill()
     return "stopped"
 
 @app.route('/restart')
 def restart():
-    global bot_process
-    if bot_process:
-        bot_process.kill()
+    global process
+    if process:
+        process.kill()
         time.sleep(2)
-        run_bot()
+        run()
     return "restarted"
 
 if __name__ == "__main__":
