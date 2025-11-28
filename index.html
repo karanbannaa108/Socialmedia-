@@ -4,98 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Karan ZeroDay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box;}
         body{
-            background:#0d0d1f;
-            color:#fff;
-            font-family:'Inter',sans-serif;
-            min-height:100vh;
-            display:flex;
-            flex-direction:column;
-            align-items:center;
-            justify-content:center;
-            gap:80px;
-            padding:40px 20px;
+            background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 100%);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before{
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(192,132,252,0.15) 0%, transparent 70%);
+            animation: float 20s infinite linear;
+            z-index: 0;
+        }
+        @keyframes float{0%{transform:translate(0,0) rotate(0deg);}100%{transform:translate(100px,-100px) rotate(360deg);}}
+        
+        .dashboard{
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+        .avatar{
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #c084fc, #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-weight: 900;
+            color: white;
+            box-shadow: 0 20px 40px rgba(192,132,252,0.4);
         }
         h1{
-            font-size:5.5rem;
-            font-weight:900;
-            background:linear-gradient(135deg,#c084fc,#818cf8);
-            -webkit-background-clip:text;
-            -webkit-text-fill-color:transparent;
-            letter-spacing:-3px;
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #c084fc, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p{
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 40px;
         }
         .links{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-            gap:32px;
-            max-width:1000px;
-            width:100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
-        .link{
-            background:rgba(255,255,255,0.05);
-            backdrop-filter:blur(16px);
-            border:1px solid rgba(255,255,255,0.1);
-            border-radius:20px;
-            padding:32px 20px;
-            text-align:center;
-            transition:0.4s;
-            cursor:pointer;
+        .btn{
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
         }
-        .link:hover{
-            transform:translateY(-16px);
-            box-shadow:0 24px 48px rgba(192,132,252,0.25);
-            border-color:#c084fc;
+        .btn::before{
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.6s;
         }
-        .link img{
-            width:80px;
-            height:80px;
-            margin-bottom:16px;
-            transition:0.3s;
+        .btn:hover::before{left: 100%;}
+        .btn:hover{
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: #c084fc;
         }
-        .link:hover img{transform:scale(1.2);}
-        .link span{
-            font-size:1.3rem;
-            font-weight:600;
+        .btn img{
+            width: 42px;
+            height: 42px;
         }
-        @media(max-width:768px){
-            h1{font-size:3.8rem;}
-            .links{grid-template-columns:repeat(2,1fr);}
+        @media(max-width:480px){
+            h1{font-size:2.3rem;}
+            .avatar{width:110px;height:110px;font-size:3rem;}
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
+<div class="dashboard">
+    <div class="avatar">K</div>
     <h1>Karan ZeroDay</h1>
+    <p>Hindi Tech Creator</p>
 
     <div class="links">
-        <a href="https://www.instagram.com/karanzeroday" target="_blank" class="link">
+        <a href="https://www.instagram.com/karanzeroday" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/instagram.svg" alt="Instagram">
-            <span>Instagram</span>
+            Instagram
         </a>
-        <a href="https://youtube.com/@karanzeroday" target="_blank" class="link">
+        <a href="https://youtube.com/@karanzeroday" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/youtube.svg" alt="YouTube">
-            <span>YouTube</span>
+            YouTube
         </a>
-        <a href="https://t.me/karanbannaa108" target="_blank" class="link">
+        <a href="https://t.me/karanbannaa108" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/telegram.svg" alt="Telegram">
-            <span>Telegram</span>
+            Telegram
         </a>
-        <a href="https://discord.gg/868fvsVWh" target="_blank" class="link">
+        <a href="https://discord.gg/868fvsVWh" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/discord.svg" alt="Discord">
-            <span>Discord</span>
+            Discord
         </a>
-        <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="link">
+        <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/whatsapp.svg" alt="WhatsApp">
-            <span>WhatsApp</span>
+            WhatsApp Channel
         </a>
-        <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="link">
+        <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank" class="btn">
             <img src="https://cdn.jsdelivr.net/npm/simple-icons@v13/icons/facebook.svg" alt="Facebook">
-            <span>Facebook</span>
+            Facebook
         </a>
     </div>
+</div>
 
 </body>
 </html>
