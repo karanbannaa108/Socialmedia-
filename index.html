@@ -9,103 +9,85 @@
         :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:20px;}
-        .header{text-align:center;padding:40px 0;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
-        h1{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-        .subtitle{font-size:1.3rem;opacity:0.9;margin-top:10px;}
-        .container{max-width:1000px;margin:0 auto;padding:20px;}
-        .dash{background:var(--card);border-radius:24px;padding:30px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
-        .upload{border:2px dashed var(--accent);border-radius:20px;padding:50px;text-align:center;cursor:pointer;transition:0.4s;margin-bottom:30px;}
-        .upload:hover{background:rgba(139,92,246,0.1);}
-        .controls{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin:30px 0;}
-        .btn{background:var(--accent);padding:16px 32px;border-radius:50px;cursor:pointer;font-weight:700;transition:0.3s;}
+        .header{text-align:center;padding:50px 0;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
+        h1{font-size:3.8rem;font-weight:900;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .container{max-width:1000px;margin:0 auto;}
+        .dash{background:var(--card);border-radius:28px;padding:40px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 25px 60px rgba(0,0,0,0.6);}
+        .upload{border:3px dashed var(--accent);border-radius:24px;padding:60px;text-align:center;cursor:pointer;transition:0.4s;margin-bottom:30px;}
+        .upload:hover{background:rgba(139,92,246,0.15);}
+        input[type="file"]{display:none;}
+        .controls{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin:35px 0;}
+        .btn{background:var(--accent);padding:18px 40px;border-radius:50px;cursor:pointer;font-weight:700;transition:0.4s;}
         .btn.stop{background:#ef4444;}.btn.restart{background:#f59e0b;}
-        .btn:hover{transform:scale(1.05);}
-        .console{background:#000;padding:20px;height:400px;overflow-y:auto;font-family:monospace;border-radius:16px;margin-top:20px;color:#0f0;}
-        .status{text-align:center;font-size:1.2rem;font-weight:700;margin:20px 0;}
-        .online{color:#10b981;}.offline{color:#ef4444;}.error{color:#ef4444;}
+        .btn:hover{transform:scale(1.08);}
+        .console{background:#000;padding:25px;height:450px;overflow-y:auto;font-family:monospace;color:#0f0;border-radius:18px;margin-top:20px;}
+        .status{text-align:center;font-size:1.4rem;font-weight:700;margin:25px 0;}
+        .online{color:#10b981;}.offline{color:#ef4444;}
     </style>
 </head>
 <body>
     <div class="header">
         <h1>KaranZeroDay</h1>
-        <p class="subtitle">Free 24/7 Python Bot Hosting • ZIP Upload • 100% Working</p>
+        <p>Free 24/7 Python Bot Hosting • ZIP Upload • Real Server</p>
     </div>
     <div class="container">
         <div class="dash">
-            <div class="upload" onclick="document.getElementById('zipfile').click()">
-                <h3>Upload Bot ZIP File</h3>
-                <p>main.py / bot.py / nm.py</p>
-                <input type="file" id="zipfile" accept=".zip" style="display:none">
-                <p id="filename">No file selected</p>
+            <div class="upload" onclick="document.getElementById('zip').click()">
+                <h3>Upload Bot ZIP</h3>
+                <p>main.py • bot.py • nm.py • index.py • start.py</p>
+                <input type="file" id="zip" accept=".zip">
+                <p id="name" style="margin-top:15px;">No file selected</p>
             </div>
 
             <div class="controls">
-                <div class="btn" onclick="uploadBot()">Upload & Run</div>
-                <div class="btn stop" onclick="stopBot()">Stop</div>
-                <div class="btn restart" onclick="restartBot()">Restart</div>
+                <div class="btn" onclick="upload()">Upload & Run</div>
+                <div class="btn stop" onclick="stop()">Stop</div>
+                <div class="btn restart" onclick="restart()">Restart</div>
             </div>
 
             <div class="status">Status: <span id="status" class="offline">Offline</span></div>
-            <div class="console" id="console">> Ready... Upload ZIP to start</div>
+            <div class="console" id="log">> Ready...</div>
         </div>
     </div>
 
     <script>
-        const consoleEl = document.getElementById('console');
+        const logEl = document.getElementById('log');
         const statusEl = document.getElementById('status');
-        const fileInput = document.getElementById('zipfile');
-        const filenameEl = document.getElementById('filename');
+        const fileInput = document.getElementById('zip');
+        const nameEl = document.getElementById('name');
 
         fileInput.addEventListener('change', () => {
-            if(fileInput.files[0]){
-                filenameEl.textContent = fileInput.files[0].name;
-            }
+            if(fileInput.files[0]) nameEl.textContent = fileInput.files[0].name;
         });
 
-        function log(msg, isError = false){
-            const time = new Date().toLocaleTimeString();
-            consoleEl.innerHTML += `<span style="color:\( {isError?'#ef4444':'#0f0'}">[ \){time}] ${msg}</span><br>`;
-            consoleEl.scrollTop = consoleEl.scrollHeight;
+        function log(msg, error = false){
+            const t = new Date().toLocaleTimeString();
+            logEl.innerHTML += `<span style="color:\( {error?'#ef4444':'#0f0'}">[ \){t}] ${msg}</span><br>`;
+            logEl.scrollTop = logEl.scrollHeight;
         }
 
-        async function uploadBot(){
-            if(!fileInput.files[0]) return alert("ZIP file select karo!");
-
+        async function upload(){
+            if(!fileInput.files[0]) return alert("ZIP select karo pehle!");
             const form = new FormData();
-            form.append('botzip', fileInput.files[0]);
-
+            form.append('zip', fileInput.files[0]);
             log("Uploading ZIP...");
 
-            try {
-                const res = await fetch('/upload', {
-                    method: 'POST',
-                    body: form
-                });
-
-                const text = await res.text();  // Pehle text padho
-                let data;
-                try {
-                    data = JSON.parse(text);  // Phir parse karo
-                } catch (e) {
-                    log("Server Error (HTML page returned)", true);
-                    log(text.substring(0, 200) + "...", true);
-                    return;
+            try{
+                const res = await fetch('/upload', {method:'POST', body:form});
+                const data = await res.json();
+                if(data.success){
+                    log(`Bot started! → ${data.file}`);
+                    statusEl.textContent = "Online"; statusEl.className = "online";
+                }else{
+                    log("Error: " + data.error, true);
                 }
-
-                if(res.ok && data.success){
-                    log(`Bot started! File: ${data.startup}`);
-                    statusEl.textContent = "Online";
-                    statusEl.className = "online";
-                } else {
-                    log("Error: " + (data.error || "Unknown"), true);
-                }
-            } catch(e){
-                log("Network Error: " + e.message, true);
+            }catch(e){
+                log("Failed: " + e.message, true);
             }
         }
 
-        async function stopBot(){ await fetch('/stop'); log("Bot stopped"); statusEl.textContent = "Offline"; statusEl.className = "offline"; }
-        async function restartBot(){ log("Restarting..."); await fetch('/restart'); log("Restarted!"); }
+        async function stop(){ await fetch('/stop'); log("Bot stopped"); statusEl.textContent = "Offline"; statusEl.className = "offline"; }
+        async function restart(){ log("Restarting..."); await fetch('/restart'); log("Restarted!"); }
     </script>
 </body>
 </html>
