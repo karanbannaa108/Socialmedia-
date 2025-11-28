@@ -1,31 +1,16 @@
 from flask import Flask, request, jsonify, send_from_directory
-import os, zipfile, subprocess, threading, time, signal
+import os, zipfile, subprocess, threading, time
 
 app = Flask(__name__, static_folder='.')
-
 process = None
-bot_folder = "mybot"
+bot_dir = "mybot"
 
 def find_main():
     files = ["main.py","bot.py","nm.py","index.py","start.py"]
     for f in files:
-        if os.path.exists(f"mybot/{f}"):
+        if os.path.exists(f"{bot_dir}/{f}"):
             return f
     return None
-
-def run():
-    global process
-    file = find_main()
-    if not file: return False
-    process = subprocess.Popen(
-        ["python", file], cwd="mybot",
-        stdout=subprocess.PIPE, stderr=subprocess.STDOUT
-    )
-    def logs():
-        for line in process.stdout:
-            print("BOT →", line.decode().strip())
-    threading.Thread(target=logs, daemon=True).start()
-    return True
 
 @app.route('/')
 def home():
@@ -37,33 +22,55 @@ def upload():
     try:
         if 'zip' not in request.files:
             return jsonify({"success":False,"error":"No file"}), 400
-        zipf = request.files['zip']
-        if not zipf.filename.endswith('.zip'):
-            return jsonify({"success":False,"error":"ZIP only"}), 400
+        
+        file = request.files['zip']
+        if not file.filename.endswith('.zip'):
+            return jsonify({"success":False,"error":"Only .zip files allowed"}), 400
 
-        if os.path.exists(bot_folder):
+        # Clean old
+        if os.path.exists(bot_dir):
             os.system("rm -rf mybot")
-        os.makedirs(bot_folder, exist_ok=True)
+        os.makedirs(bot_dir, exist_ok=True)
 
         path = "temp.zip"
-        zipf.save(path)
-        with zipfile.ZipFile(path, 'r') as z:
-            z.extractall(bot_folder)
+        file.save(path)
+
+        # Check if valid ZIP
+        if not zipfile.is_zipfile(path):
+            os.remove(path)
+            return jsonify({"success":False,"error":"Invalid or corrupted ZIP file"}), 400
+
+        # Extract with password check
+        try:
+            with zipfile.ZipFile(path, 'r') as z:
+                z.extractall(bot_dir)
+        except RuntimeError as e:
+            if "encrypted" in str(e):
+                os.remove(path)
+                return jsonify({"success":False,"error":"Password protected ZIP not allowed"}), 400
+            else:
+                os.remove(path)
+                return jsonify({"success":False,"error":"ZIP extraction failed"}), 400
+
         os.remove(path)
 
-        req = "mybot/requirements.txt"
-        if os.path.exists(req):
-            os.system(f"pip install -r {req} --quiet")
+        # Install requirements
+        if os.path.exists(f"{bot_dir}/requirements.txt"):
+            os.system(f"pip install -r {bot_dir}/requirements.txt --quiet")
 
+        # Kill old bot
         if process:
             process.kill()
-        time.sleep(1)
+            time.sleep(1)
 
+        # Run bot
         main_file = find_main()
-        if main_file and run():
+        if main_file:
+            process = subprocess.Popen(["python", main_file], cwd=bot_dir)
             return jsonify({"success":True, "file":main_file})
         else:
-            return jsonify({"success":False,"error":"No main.py/bot.py found"}), 400
+            return jsonify({"success":False,"error":"No main.py/bot.py/nm.py found"}), 400
+
     except Exception as e:
         return jsonify({"success":False,"error":str(e)}), 500
 
@@ -80,7 +87,9 @@ def restart():
     if process:
         process.kill()
         time.sleep(2)
-        run()
+        main_file = find_main()
+        if main_file:
+            process = subprocess.Popen(["python", main_file], cwd=bot_dir)
     return "restarted"
 
 if __name__ == "__main__":
