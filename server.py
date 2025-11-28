@@ -4,7 +4,7 @@ import zipfile
 import subprocess
 import threading
 import time
-import signal
+import json
 
 app = Flask(__name__, static_folder='.')
 
@@ -31,10 +31,11 @@ def run_bot():
         bufsize=1, universal_newlines=True
     )
     
-    def stream():
-        for line in bot_process.stdout:
-            print("BOT →", line.strip())
-    threading.Thread(target=stream, daemon=True).start()
+    def stream_output():
+        for line in iter(bot_process.stdout.readline, ''):
+            if line:
+                print(f"BOT LOG: {line.strip()}")
+    threading.Thread(target=stream_output, daemon=True).start()
     return True
 
 @app.route('/')
@@ -44,57 +45,68 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     global bot_process
-    if 'botzip' not in request.files:
-        return jsonify({"success": False, "error": "No file"})
+    try:
+        if 'botzip' not in request.files:
+            return jsonify({"success": False, "error": "No file uploaded"}), 400
 
-    file = request.files['botzip']
-    if not file.filename.endswith('.zip'):
-        return jsonify({"success": False, "error": "Only ZIP allowed"})
+        file = request.files['botzip']
+        if not file.filename.endswith('.zip'):
+            return jsonify({"success": False, "error": "Only ZIP files allowed"}), 400
 
-    # Clean old bot
-    if os.path.exists(bot_dir):
-        os.system(f"rm -rf {bot_dir}")
-    os.makedirs(bot_dir, exist_ok=True)
+        # Clean old bot
+        if os.path.exists(bot_dir):
+            os.system(f"rm -rf {bot_dir}")
+        os.makedirs(bot_dir, exist_ok=True)
 
-    # Save & extract
-    zip_path = "temp_bot.zip"
-    file.save(zip_path)
-    with zipfile.ZipFile(zip_path, 'r') as z:
-        z.extractall(bot_dir)
-    os.remove(zip_path)
+        # Save and extract ZIP
+        zip_path = "temp_bot.zip"
+        file.save(zip_path)
+        with zipfile.ZipFile(zip_path, 'r') as z:
+            z.extractall(bot_dir)
+        os.remove(zip_path)
 
-    # Install requirements
-    req_path = os.path.join(bot_dir, "requirements.txt")
-    if os.path.exists(req_path):
-        print("Installing requirements...")
-        os.system(f"pip install -r {req_path} --quiet")
+        # Install requirements if exists
+        req_path = os.path.join(bot_dir, "requirements.txt")
+        if os.path.exists(req_path):
+            os.system(f"pip install -r {req_path} --quiet")
 
-    # Stop old bot
-    if bot_process:
-        bot_process.kill()
+        # Stop old bot if running
+        if bot_process:
+            bot_process.kill()
+            time.sleep(1)
 
-    # Run new bot
-    startup = find_startup()
-    if startup and run_bot():
-        return jsonify({"success": True, "startup": startup})
-    else:
-        return jsonify({"success": False, "error": "No startup file found"})
+        # Run new bot
+        startup = find_startup()
+        if startup and run_bot():
+            return jsonify({"success": True, "startup": startup})
+        else:
+            return jsonify({"success": False, "error": "No startup file (main.py/bot.py/nm.py) found"}), 400
+
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
 
 @app.route('/stop')
 def stop():
     global bot_process
-    if bot_process:
-        bot_process.kill()
-    return "stopped"
+    try:
+        if bot_process:
+            bot_process.kill()
+            time.sleep(1)
+        return "stopped"
+    except Exception as e:
+        return str(e), 500
 
 @app.route('/restart')
 def restart():
     global bot_process
-    if bot_process:
-        bot_process.kill()
-        time.sleep(2)
+    try:
+        if bot_process:
+            bot_process.kill()
+            time.sleep(2)
         run_bot()
-    return "restarted"
+        return "restarted"
+    except Exception as e:
+        return str(e), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080, debug=False)
