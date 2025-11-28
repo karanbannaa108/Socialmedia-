@@ -10,39 +10,48 @@
     <meta property="og:image" content="https://i.ibb.co.com/0jG4XhK/karanzeroday-og.jpg">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Mukta:wght@400;600;800&display=swap" rel="stylesheet">
+    
     <style>
         :root { --bg: #0a0a1f; --card: rgba(255,255,255,0.08); --glow: rgba(168,85,247,0.5); }
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Poppins',sans-serif; background:var(--bg); color:#fff; min-height:100vh;
-               background-image: radial-gradient(circle at 10% 20%, rgba(168,85,247,0.15) 0%, transparent 20%),
-                                 radial-gradient(circle at 90% 80%, rgba(99,102,241,0.15) 0%, transparent 20%); }
-        .container { max-width:1200px; margin:0 auto; padding:0 20px; }
-        header { padding:30px 0; text-align:right; }
-        .lang-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:10px 20px; border-radius:50px; cursor:pointer; backdrop-filter:blur(10px); }
-        .lang-btn:hover { background:rgba(168,85,247,0.3); }
-        .hero { text-align:center; padding:120px 20px; }
+               background: radial-gradient(circle at 10% 20%, rgba(168,85,247,0.15), transparent 20%),
+                           radial-gradient(circle at 90% 80%, rgba(99,102,241,0.15), transparent 20%); }
+        .container { max-width:1200px; margin:0 auto; padding:20px; }
+        header { text-align:right; padding:20px 0; }
+        .lang-btn { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:10px 24px; border-radius:50px; cursor:pointer; backdrop-filter:blur(10px); transition:0.3s; }
+        .lang-btn:hover { background:rgba(168,85,247,0.4); }
+
+        .hero { text-align:center; padding:100px 20px; }
         .hero h1 { font-size:5.5rem; font-weight:800; background:linear-gradient(90deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .hero p { font-size:1.9rem; opacity:0.9; font-family:'Mukta',sans-serif; }
-        .about { text-align:center; padding:100px 20px; max-width:900px; margin:0 auto; font-family:'Mukta',sans-serif; font-size:1.3rem; line-height:2; }
+        .hero p { font-size:1.9rem; opacity:0.9; font-family:'Mukta',sans-serif; margin-top:10px; }
+
+        .about { text-align:center; padding:80px 20px; max-width:900px; margin:0 auto; font-family:'Mukta',sans-serif; font-size:1.3rem; line-height:2; }
+
         .socials h2 { text-align:center; font-size:3rem; margin:80px 0 60px; background:linear-gradient(90deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
         .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:30px; max-width:1000px; margin:0 auto; padding:0 20px; }
-        .card { background:var(--card); backdrop-filter:blur(15px); border-radius:20px; padding:40px 20px; text-align:center; border:1px solid rgba(255,255,255,0.1); transition:all 0.5s; cursor:pointer; }
+        .card { background:var(--card); backdrop-filter:blur(15px); border-radius:20px; padding:40px 20px; text-align:center; border:1px solid rgba(255,255,255,0.1); transition:0.5s; cursor:pointer; }
         .card:hover { transform:translateY(-20px) scale(1.05); box-shadow:0 25px 50px var(--glow); border:1px solid #a855f7; }
-        .card img { width:85px; height:85px; margin-bottom:20px; transition:0.4s; }
+        .card img { width:90px; height:90px; margin-bottom:20px; transition:0.4s; }
         .card:hover img { transform:scale(1.2); }
         .card p { font-size:1.3rem; font-weight:600; }
-        footer { text-align:center; padding:60px; opacity:0.8; }
+
+        footer { text-align:center; padding:60px; opacity:0.8; font-size:0.95rem; }
+
         [data-lang="en"] { display:none; }
         body.lang-hi [data-lang="hi"] { display:block; }
         body.lang-hi [data-lang="en"] { display:none; }
         body.lang-en [data-lang="en"] { display:block; }
         body.lang-en [data-lang="hi"] { display:none; }
-        @media (max-width:768px) { .hero h1{font-size:3.5rem;} .hero p{font-size:1.4rem;} }
+
+        @media (max-width:768px) { .hero h1{font-size:3.5rem;} .hero p{font-size:1.5rem;} .socials h2{font-size:2.3rem;} }
     </style>
 </head>
 <body class="lang-hi">
 <div class="container">
-    <header><div class="lang-btn" onclick="toggleLang()">EN</div></header>
+    <header>
+        <div class="lang-btn" onclick="toggleLang()">EN</div>
+    </header>
 
     <section class="hero">
         <h1><span data-lang="hi">करण जीरोडे</span><span data-lang="en">Karan ZeroDay</span></h1>
@@ -57,7 +66,44 @@
     <section class="socials">
         <h2><span data-lang="hi">मुझसे जुड़ें</span><span data-lang="en">Connect With Me</span></h2>
         <div class="grid">
-
-            <!-- Instagram -->
             <div class="card" onclick="window.open('https://www.instagram.com/karanzeroday','_blank')">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTIwLjUgMmgtMTdDMS42NyAyIDIgMi42NyAyIDQuNXYxNWMwIDEuODMuNjcgMy40OCAxLjUgMy41aDE3YzEuODMgMCAzLjUtMS42NyAzLjUtMy41VjQuNWMwLTEuODMtMS42Ny0zLjUtMy41LTMuNXptLTMuMTYgMTYuNjRjLTIuNDYgMC00LjY0LTEuOTgtNC42NC00LjQ0IDAtMi40NiAxLjk4LTQuNDQgNC40NC00LjQ0IDIuNDYgMCA0LjQ0IDEuOTggNC40NCA0LjQ0IDAgMi40Ni0xLjk4IDQuNDQtNC40NCA0LjQ0IDIuNDYgMCA0LjY0LTEuOTggNC42NC00LjQ0IDAtMi40Ni0xLjk4LTQuNDQtNC40NC00LjQ0em0wLTcuNjRjLTIuOTUgMC01LjM2LTIuNDEtNS4zNi01LjM2IDAtMi45NSAyLjQxLTUuMzYgNS4zNi01LjM2IDIuOTUgMCA1LjM2IDIuNDEgNS4zNiA1LjM2IDAgMi45NS0yLjQxIDUuMzYtNS4zNiA1LjM2LTIuOTUgMC01LjM2LTIuNDEtNS4zNi01LjM2em0wLTYuNjRjMS4zNyAwIDIuMzYgMS4wIDIuMzYgMi4zNiAwIDEuMzctMS4wIDIuMzYtMi4zNiAyLjM2LTEuMzcgMC0yLjM2LTEtMi4zNi0yLjM2IDAtMS4zNiAxLTEuMzYgMi4zNi0yLjM2IDEuMzYgMCAyLjM2IDEgMi4zNiAyLjM2em0tMTEuMjUgMTEuMjVjLS4xNy0uMTctLjMzLS4zNC0uNS0uNWMtLjE3LS4xNy0uMzQtLjMzLS41LS41LS4xNy0uMTctLjM0LS4zNC0uNS0uNS0uMTctLjE3LS4zNC0uMzQtLjUtLjUtLjE3LS4xNy0uMzQtLjM0LS41LS41LS4xNy0uMTctLjM0LS4zNC0uNS0uNS0uMTctLjE3LS4zNC0uMzQtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjM0LS4zNC0uNS0uNWwtLjUtLjVjLS4xNy0uMTctLjMTctM0LSM0LSMTctLjM0LS4zNC0uNS4zNC0uNS4zNC0uNS0uNW00wtLjuUtuNWwtLjNWUtwtLjUtLjVjLjVjLjVjLSLS44xNyx0uNyLS4xNy0u0uMTMTctctLjctLjMM0LjM0LSLS0LS44zzNC0uNCNS0uNS4zNC0uNS0uNWwtLj0Utu0uNWNWwtLjUtwtLjUtLjVjLjVjLjVjLSLSLS4xNy0u4xNy0u4xNy0uMTctLjMMTMTLSctctLjLjM0LSM0LS44z4NC0zzuNCNC0NS0uuNSNS00uuNWwtLjUtNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLSLS4LS44xxxNyNy0u0uNy0uMTMTctLjM0ctLSMTctMLjM00LSLS444zNCzzNCNC00uNSuNS0uNS0uNWwtLjUt0uNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLS4xNy0uLSLS4x4Ny0xuNy0uMTctLjMMTctLjM0LS0MTLSctLjM0LS4z4zNC4NCz0u00uuNSNSNS00uNWwtLjUtuNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLSLS44xxNy0Nyu0uLS4xNy0uMTMTMTctLjctLjM0LSM0LSctLjM0LS4zNC0uNS44zzNCNC00uuNSNS0uNW0LjUtuNWwtLj0uNWwtLjUtUtLjLjVjLjVjVjLSLS4xNyLS4xxNyNy0u0u0uMTMTctLjMct0LSMTLjMctLjM0LS0LS44zNC04uNSzNC0uNSzNC0uNS00uuNWwtLjNWwt0uLjUtUtNWwtLjUtLjVjLjVjLjVjLS4xNy0uLSLS4x4NyxNy00uuMTctLjMMT0LSMTctctLjLjM0MLS0LS4z4z40uzNCNS0NC0uNSuNS000uNWuwtNWuLjwtUtNWLjUtwtLjUtLjVjLjVjLjVjLSLSLS444xxNy0Ny0uxNy0uMTMTctctMTctLjMLjM0LjM00LSLSLS44zz4zNCNC000uuuNSNSNS000uNWwtuNWwtLjLjUtUtuNWwtLjUtLjVjVjLjVjLSLS4LSxNy04xNy0u4Nyu0uMTMTMTctLjctctLjM00LSMLS0LS44zzNC0uNC0NS4zNC0uNSuNS00uNW0uNWwtuNWwtLjUtwtLjUtLjUtLjLjVjVjLjVjLSLSLS444xxxNyNyNy0u00uuMTMTctLjM0LSctMTLjctMLj0MLS0LS44zNCzNC0uNS04uNSzNC0uNS0u0uNWwtLjUtNW0wtLjUtuNWwtLjUtLjLjVjVjLjVjLS4xLSNy04xNy0LSuu4xNy0uMTMTMTctLjctMLjctLjM0M0LS0LSLS444zzNCNCz00uuNSNCNS0uNS000uNWuNWuwtwtLjLjUtUtNWwtLjUtLjVjLjVjLjVjLS4LSx4NyLS0xNyu40uxNy0uMTctLjM0LSMTctLjM0LSMTctLjM0LS4zNC4zNC0uNS0uNS0uNWwtLjUt0uNWwtLjUtLjVjLjVj4zNC0uNS0uNWwtLjUtLjVjLSLS44xxNy00uuLS4xNy0uMTMTctLjctLjM0LSM0LSMTctLjM0LS4zNC404zuzNCNSNC00uuNSNS00uNWuwtNW0LjUtwtuLjUtNWwtLjUtLjLjVjLjVjVjLSLSLS4x4xNy4x0NyNy0uMT0uuMTctLjM0LSctLjM0LSMTctLjM0LS4zNC4zNC0uNS40zNCuNS0uNS0uNWwtLjUt0uNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLSLS4x4xLSNy0Ny4x0uuNy0uMTMTctMTctctLjLjMM0LS0LSLjM0LS4zNC0uNS4zNC0u4zNSNC0uNS000uNWuNWwtLjUtuNWwtwtLjUtLjUtLjVjLjVjLjVjLSLS4x4xNy0Nyu0uLS4xNy0uMTctLjMTctLjMM00LSLSMTctLjM0LS44zNCz0NC4uNS0uNC0uNSNS0u0uNWwtLjUt0uNWwtLjUtNWwtLjUtLjVjLjVjLjVjLSLS4xLSNy44x0Nyux0uNy0uMTMTctctLjMLjM0MT0ctLjM0LSLSLS444zzzNCNCNC0u0uNSNS0uNS00u0uuNWNWwtwtLjNWLjUtwtLjUtLjLjVjVjLjVjLSLS4xLS44NyxNy0u0uxNy0uMTctLjM0LSMTctLjM0LS44zzNCNC00uuNSNSMTctLjM0LS4zNC0uNS0u0uNWwtNWwtLjUt0uNWwtLjUtLjUtLjVjLjLjVjVjLS4xLS4xNyNy0u0uLS4xNy0uMTMTctLjM0LSctLjM0LSMTctLjM0LS44z4zNCNCz0NC0u0uNSuNSNS00uNWwtLjUt0uNWwtLjUtLjVjLjVjuNWwtLjUtLjVjLSLS4x4xNyNy00uuLS4xNy0uMTctLjM0LSMTctLjM0LSMTctLj4zNC0M4u0LSzNSNC0uNS4zNC0uNS0uNWwtLjUt0uNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLS4xNy0uLS4xNy0uLS4xNy0uMTMTctLjMTMct0LjLSM0LSctLjM0LS44zNC0uNSzNC0uNS4zNC0uNS000uNWuNWwtLjwtUtLjUtuNWwtLjUtLjLjLjVjVjVjLS4LS4LSxNyxNy004xNy0uuuMTctMTLjMctLjM0LS0LSMTctLjM0LS44zzNC0NC0uuNSNS4zNC0uNS0uNWwtLjUt0uNWwtLjUt0uNWwtLjUtLjVjLjVjLjVjLSLS44xxNy0NyuLS4xNy0u0uMTctLjMTM0ctLSLjM0LSMTctLjM0LS44zNC0zNC0uu4NSzNC0uNS0u0NSuNW0uNWNWwtwtLjwtUtLjLjUtUtLjLjVjVjLjVjLSLS44xxNyLSNy0u04uxNy0uMTMTctLjM0LSctLjM0LSMTctLjM0LS4zNC0uNS4zNC0uNS4zNC0uNS00uNWwtLjUt0uNWwtLjUtuNWwtLjUtLjLjVjVjLjVjLSLS4xNy0u4xNy0LS4xNyu0u
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+                <p>Instagram</p>
+            </div>
+            <div class="card" onclick="window.open('https://youtube.com/@karanzeroday','_blank')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon-icon_%282017%29.svg" alt="YouTube">
+                <p>YouTube</p>
+            </div>
+            <div class="card" onclick="window.open('https://t.me/karanbannaa108','_blank')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram">
+                <p>Telegram</p>
+            </div>
+            <div class="card" onclick="window.open('https://discord.gg/868fvsVWh','_blank')">
+                <img src="https://assets-global.website-files.com/6257adef93867e50d84d30e2/636e0a6a49cf127bf92bb468_6367d81a7e4e3b272f5b5657_Discord-Logo-Color.png" alt="Discord" style="width:100px;">
+                <p>Discord</p>
+            </div>
+            <div class="card" onclick="window.open('https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231','_blank')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+                <p>WhatsApp</p>
+            </div>
+            <div class="card" onclick="window.open('https://www.facebook.com/profile.php?id=61565140307947','_blank')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+                <p>Facebook</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Karan ZeroDay | <span data-lang="hi">सभी अधिकार सुरक्षित</span><span data-lang="en">All Rights Reserved</span></p>
+    </footer>
+</div>
+
+<script>
+    function toggleLang() {
+        document.body.classList.toggle('lang-hi');
+        document.body.classList.toggle('lang-en');
+        document.querySelector('.lang-btn').textContent = document.body.classList.contains('lang-hi') ? 'EN' : 'हिंदी';
+    }
+</script>
+</body>
+</html>
