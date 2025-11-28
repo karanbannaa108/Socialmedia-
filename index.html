@@ -4,167 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- ====== SEO Tags ======, सब कुछ ऑप्टिमाइज़्ड ====== -->
+    <!-- ====== SEO Optimized ====== -->
     <title>Karan ZeroDay - Best Phone Under 20000 | Tech Tips & Reviews Hindi</title>
-    <meta name="description" content="Karan ZeroDay - हिंदी में बेस्ट फोन रिव्यू, गैजेट अनबॉक्सिंग, मोबाइल टिप्स और ट्रिक्स। Best phone under 15000, 20000, latest tech news और रिव्यू हिंदी में।">
-    <meta name="keywords" content="Karan ZeroDay, करण जीरोडे, best phone under 20000, best phone under 15000, tech tips hindi, mobile tips and tricks hindi, gadget review hindi, हिंदी टेक यूट्यूबर">
-    <meta name="author" content="Karan ZeroDay">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://karanzeroday.vercel.app">
-
-    <!-- Open Graph / WhatsApp, Instagram, Facebook Sharing -->
-    <meta property="og:title" content="Karan ZeroDay - Hindi Tech YouTuber | Best Phones & Tips">
-    <meta property="og:description" content="हिंदी में बेस्ट फोन, गैजेट रिव्यू और यूज़फुल टिप्स रोज़ाना!">
+    <meta name="description" content="Karan ZeroDay - हिंदी में बेस्ट फोन रिव्यू, गैजेट्स अनबॉक्सिंग, मोबाइल टिप्स और ट्रिक्स। Best phone under 15000-20000, लेटेस्ट टेक न्यूज़ हिंदी में।">
+    <meta name="keywords" content="Karan ZeroDay, करण जीरोडे, best phone under 20000, tech tips hindi, gadget review hindi">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Karan ZeroDay - Hindi Tech YouTuber">
+    <meta property="og:description" content="हिंदी में आसान और मज़ेदार टेक वीडियो – फोन रिव्यू, टिप्स, गैजेट्स">
     <meta property="og:image" content="https://i.ibb.co.com/0jG4XhK/karanzeroday-og.jpg">
-    <meta property="og:url" content="https://karanzeroday.vercel.app">
+    <meta property="og:url" content="https://karanzeroday.in">
     <meta property="og:type" content="website">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Karan ZeroDay - Best Phone Under 20000 Hindi">
-    <meta name="twitter:description" content="हिंदी में आसान टेक वीडियो और रिव्यू">
-    <meta name="twitter:image" content="https://i.ibb.co.com/0jG4XhK/karanzeroday-og.jpg">
-
-    <!-- Favicon -->
-    <link rel="icon" href="https://i.ibb.co.com/8X8Y7Yf/favicon.png" type="image/png">
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Mukta:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         :root {
-            --bg: #121212;
-            --text: #ffffff;
-            --accent: #a855f7;
-            --accent2: #6366f1;
+            --bg: #0a0a1f;
+            --card: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(168, 85, 247, 0.5);
         }
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            color: #fff;
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.15) 0%, transparent 20%),
+                              radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 20%);
             overflow-x: hidden;
         }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* Header */
         header {
-            padding: 20px 0;
+            padding: 25px 0;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 100;
+            justify-content: flex-end;
         }
-        .lang-switch {
+        .lang-btn {
             background: rgba(255,255,255,0.1);
-            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 10px 20px;
             border-radius: 50px;
             cursor: pointer;
-            border: 1px solid var(--accent);
-            font-size: 14px;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
         }
+        .lang-btn:hover { background: rgba(168,85,247,0.3); }
 
-        /* Hero */
         .hero {
             text-align: center;
-            padding: 100px 20px;
-            min-height: 90vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 120px 20px;
         }
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: 5.5rem;
             font-weight: 800;
-            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            background: linear-gradient(90deg, #a855f7, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            animation: fadeIn 1.5s;
         }
         .hero p {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
-        /* About */
-        .about {
-            padding: 80px 20px;
-            text-align: center;
-            background: rgba(255,255,255,0.03);
-        }
-        .about p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto;
             font-family: 'Mukta', sans-serif;
         }
 
-        /* Social Links */
-        .socials {
-            padding: 100px 20px;
+        .about {
             text-align: center;
+            padding: 100px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: 'Mukta', sans-serif;
+            font-size: 1.3rem;
+            line-height: 2;
+            animation: fadeIn 2s;
         }
+
         .socials h2 {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
+            text-align: center;
+            font-size: 3rem;
+            margin: 80px 0 60px;
             background: linear-gradient(90deg, #a855f7, #6366f1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 30px;
-            max-width: 900px;
+            padding: 0 20px;
+            max-width: 1000px;
             margin: 0 auto;
         }
         .card {
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
+            background: var(--card);
+            backdrop-filter: blur(15px);
             border-radius: 20px;
-            transition: all 0.4s;
-            border: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 40px 20px;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: all 0.5s ease;
+            cursor: pointer;
         }
         .card:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 20px 40px rgba(168, 85, 247, 0.3);
-            border-color: var(--accent);
+            transform: translateY(-20px) scale(1.05);
+            box-shadow: 0 25px 50px var(--glow);
+            border: 1px solid #a855f7;
         }
-        .card i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--accent);
+        .card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            transition: 0.4s;
         }
-        .card a {
-            color: white;
-            text-decoration: none;
-            font-size: 1.1rem;
+        .card:hover img { transform: scale(1.2); }
+        .card p {
+            font-size: 1.3rem;
             font-weight: 600;
         }
 
-        /* Footer */
         footer {
             text-align: center;
-            padding: 40px;
-            background: rgba(0,0,0,0.4);
-            font-size: 0.9rem;
+            padding: 60px 20px;
+            margin-top: 100px;
+            opacity: 0.8;
+            font-size: 1rem;
         }
 
-        /* Language Content */
+        /* Language Switch */
         [data-lang="en"] { display: none; }
         body.lang-hi [data-lang="hi"] { display: block; }
         body.lang-hi [data-lang="en"] { display: none; }
         body.lang-en [data-lang="en"] { display: block; }
         body.lang-en [data-lang="hi"] { display: none; }
 
+        @keyframes fadeIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
+            .hero h1 { font-size: 3.5rem; }
             .hero p { font-size: 1.4rem; }
+            .socials h2 { font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -172,8 +156,7 @@
 
     <div class="container">
         <header>
-            <div></div>
-            <div class="lang-switch" onclick="toggleLang()">EN</div>
+            <div class="lang-btn" onclick="toggleLang()">EN</div>
         </header>
 
         <section class="hero">
@@ -189,8 +172,8 @@
 
         <section class="about">
             <p>
-                <span data-lang="hi">मैं हिंदी में आसान और मज़ेदार टेक वीडियो बनाता हूँ – बेस्ट फोन रिव्यू, गैजेट अनबॉक्सिंग, मोबाइल टिप्स और ट्रिक्स, लेटेस्ट टेक न्यूज़ और बहुत कुछ!</span>
-                <span data-lang="en">I create simple, fun and useful tech videos in Hindi – best phone reviews, gadget unboxing, mobile tips & tricks, latest tech news and much more!</span>
+                <span data-lang="hi">मैं हिंदी में आसान और मज़ेदार टेक वीडियो बनाता हूँ – बेस्ट फोन रिव्यू, गैजेट्स अनबॉक्सिंग, मोबाइल टिप्स और ट्रिक्स, लेटेस्ट टेक न्यूज़ और बहुत कुछ!</span>
+                <span data-lang="en">I create simple, fun and useful tech videos in Hindi – best phone reviews, gadget unboxing, mobile tips & tricks, latest tech news and more!</span>
             </p>
         </section>
 
@@ -199,30 +182,31 @@
                 <span data-lang="hi">मुझसे जुड़ें</span>
                 <span data-lang="en">Connect With Me</span>
             </h2>
+
             <div class="grid">
-                <div class="card">
-                    <i class="fab fa-instagram"></i>
-                    <a href="https://www.instagram.com/karanzeroday" target="_blank">Instagram</a>
+                <div class="card" onclick="window.open('https://www.instagram.com/karanzeroday', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/instagram.svg" alt="Instagram Karan ZeroDay">
+                    <p>Instagram</p>
                 </div>
-                <div class="card">
-                    <i class="fab fa-youtube"></i>
-                    <a href="https://youtube.com/@karanzeroday" target="_blank">YouTube</a>
+                <div class="card" onclick="window.open('https://youtube.com/@karanzeroday', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/youtube.svg" alt="YouTube Karan ZeroDay">
+                    <p>YouTube</p>
                 </div>
-                <div class="card">
-                    <i class="fab fa-telegram"></i>
-                    <a href="https://t.me/karanbannaa108" target="_blank">Telegram</a>
+                <div class="card" onclick="window.open('https://t.me/karanbannaa108', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/telegram.svg" alt="Telegram Karan ZeroDay">
+                    <p>Telegram</p>
                 </div>
-                <div class="card">
-                    <i class="fab fa-discord"></i>
-                    <a href="https://discord.gg/868fvsVWh" target="_blank">Discord</a>
+                <div class="card" onclick="window.open('https://discord.gg/868fvsVWh', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/discord.svg" alt="Discord Karan ZeroDay">
+                    <p>Discord</p>
                 </div>
-                <div class="card">
-                    <i class="fab fa-whatsapp"></i>
-                    <a href="https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231" target="_blank">WhatsApp</a>
+                <div class="card" onclick="window.open('https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/whatsapp.svg" alt="WhatsApp Channel Karan ZeroDay">
+                    <p>WhatsApp</p>
                 </div>
-                <div class="card">
-                    <i class="fab fa-facebook"></i>
-                    <a href="https://www.facebook.com/profile.php?id=61565140307947" target="_blank">Facebook</a>
+                <div class="card" onclick="window.open('https://www.facebook.com/profile.php?id=61565140307947', '_blank')">
+                    <img src="https://cdn.jsdelivr.net/gh/KaranZeroDay/facebook.svg" alt="Facebook Karan ZeroDay">
+                    <p>Facebook</p>
                 </div>
             </div>
         </section>
@@ -235,35 +219,12 @@
         </footer>
     </div>
 
-    <!-- Structured Data (JSON-LD) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Karan ZeroDay",
-      "alternateName": "करण जीरोडे",
-      "url": "https://karanzeroday.vercel.app",
-      "sameAs": [
-        "https://www.instagram.com/karanzeroday",
-        "https://youtube.com/@karanzeroday",
-        "https://t.me/karanbannaa108",
-        "https://discord.gg/868fvsVWh",
-        "https://whatsapp.com/channel/0029VbAj3gl9Gv7Qdfwtn231",
-        "https://www.facebook.com/profile.php?id=61565140307947"
-      ]
-    }
-    </script>
-
     <script>
         function toggleLang() {
             document.body.classList.toggle('lang-hi');
             document.body.classList.toggle('lang-en');
-            const btn = document.querySelector('.lang-switch');
-            btn.textContent = document.body.classList.contains('lang-hi') ? 'EN' : 'हिंदी';
-        }
-        // Default English न हो जाए इसलिए
-        if (!document.body.classList.contains('lang-hi')) {
-            toggleLang();
+            document.querySelector('.lang-btn').textContent = 
+                document.body.classList.contains('lang-hi') ? 'EN' : 'हिंदी';
         }
     </script>
 </body>
