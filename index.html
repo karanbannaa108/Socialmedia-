@@ -6,7 +6,7 @@
     <title>KaranZeroDay Bot Hosting</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;--glow:rgba(139,92,246,0.4);}
+        :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;}
         *{margin:0;padding:0;box-sizing:border-box;}
         body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:20px;}
         .header{text-align:center;padding:40px 0;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
@@ -22,19 +22,19 @@
         .btn:hover{transform:scale(1.05);}
         .console{background:#000;padding:20px;height:400px;overflow-y:auto;font-family:monospace;border-radius:16px;margin-top:20px;color:#0f0;}
         .status{text-align:center;font-size:1.2rem;font-weight:700;margin:20px 0;}
-        .online{color:#10b981;}.offline{color:#ef4444;}
-        .error{color:#ef4444;}
+        .online{color:#10b981;}.offline{color:#ef4444;}.error{color:#ef4444;}
     </style>
 </head>
 <body>
     <div class="header">
         <h1>KaranZeroDay</h1>
-        <p class="subtitle">Free 24/7 Python Bot Hosting • ZIP Upload • Real Server</p>
+        <p class="subtitle">Free 24/7 Python Bot Hosting • ZIP Upload • 100% Working</p>
     </div>
     <div class="container">
         <div class="dash">
             <div class="upload" onclick="document.getElementById('zipfile').click()">
-                <h3>Upload Bot ZIP (main.py / bot.py / nm.py)</h3>
+                <h3>Upload Bot ZIP File</h3>
+                <p>main.py / bot.py / nm.py</p>
                 <input type="file" id="zipfile" accept=".zip" style="display:none">
                 <p id="filename">No file selected</p>
             </div>
@@ -46,7 +46,7 @@
             </div>
 
             <div class="status">Status: <span id="status" class="offline">Offline</span></div>
-            <div class="console" id="console">> Ready... Upload ZIP to start bot</div>
+            <div class="console" id="console">> Ready... Upload ZIP to start</div>
         </div>
     </div>
 
@@ -64,51 +64,48 @@
 
         function log(msg, isError = false){
             const time = new Date().toLocaleTimeString();
-            const className = isError ? 'error' : '';
-            consoleEl.innerHTML += `<span style="color:\( {isError ? '#ef4444' : '#0f0'}">[ \){time}] ${msg}</span><br>`;
+            consoleEl.innerHTML += `<span style="color:\( {isError?'#ef4444':'#0f0'}">[ \){time}] ${msg}</span><br>`;
             consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
         async function uploadBot(){
-            if(!fileInput.files[0]) return alert("ZIP file select karo pehle!");
-            
+            if(!fileInput.files[0]) return alert("ZIP file select karo!");
+
             const form = new FormData();
             form.append('botzip', fileInput.files[0]);
 
-            log("Uploading ZIP file...");
-            try{
-                const res = await fetch('/upload', {method:'POST', body:form});
-                if (!res.ok) {
-                    throw new Error(`HTTP \( {res.status}: \){res.statusText}`);
+            log("Uploading ZIP...");
+
+            try {
+                const res = await fetch('/upload', {
+                    method: 'POST',
+                    body: form
+                });
+
+                const text = await res.text();  // Pehle text padho
+                let data;
+                try {
+                    data = JSON.parse(text);  // Phir parse karo
+                } catch (e) {
+                    log("Server Error (HTML page returned)", true);
+                    log(text.substring(0, 200) + "...", true);
+                    return;
                 }
-                const data = await res.json();
-                if(data.success){
-                    log(`Bot uploaded! Startup: ${data.startup}`);
-                    log("Bot is now RUNNING 24/7");
-                    statusEl.textContent = "Online"; statusEl.className = "online";
-                }else{
-                    log(`Error: ${data.error}`, true);
+
+                if(res.ok && data.success){
+                    log(`Bot started! File: ${data.startup}`);
+                    statusEl.textContent = "Online";
+                    statusEl.className = "online";
+                } else {
+                    log("Error: " + (data.error || "Unknown"), true);
                 }
-            }catch(e){
-                log(`Upload failed: ${e.message}`, true);
+            } catch(e){
+                log("Network Error: " + e.message, true);
             }
         }
 
-        async function stopBot(){ 
-            try{
-                await fetch('/stop');
-                log("Bot stopped");
-                statusEl.textContent = "Offline"; statusEl.className = "offline";
-            }catch(e){ log(e.message, true); }
-        }
-        async function restartBot(){ 
-            log("Restarting bot...");
-            try{
-                await fetch('/restart');
-                log("Bot restarted!");
-                statusEl.textContent = "Online"; statusEl.className = "online";
-            }catch(e){ log(e.message, true); }
-        }
+        async function stopBot(){ await fetch('/stop'); log("Bot stopped"); statusEl.textContent = "Offline"; statusEl.className = "offline"; }
+        async function restartBot(){ log("Restarting..."); await fetch('/restart'); log("Restarted!"); }
     </script>
 </body>
 </html>
