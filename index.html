@@ -8,53 +8,45 @@
     <style>
         :root{--bg:#0a0a0f;--card:#11111a;--accent:#8b5cf6;--glow:rgba(139,92,246,0.4);}
         *{margin:0;padding:0;box-sizing:border-box;}
-        body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;min-height:100vh;}
-        .header{text-align:center;padding:50px 20px;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
-        h1{font-size:3.8rem;font-weight:900;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        body{background:var(--bg);color:#fff;font-family:'Inter',sans-serif;min-height:100vh;padding:20px;}
+        .header{text-align:center;padding:40px 0;background:linear-gradient(135deg,rgba(139,92,246,0.2),transparent);}
+        h1{font-size:3.5rem;font-weight:900;background:linear-gradient(135deg,#c084fc,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
         .subtitle{font-size:1.3rem;opacity:0.9;margin-top:10px;}
         .container{max-width:1000px;margin:0 auto;padding:20px;}
-        .dash{background:var(--card);border-radius:28px;padding:40px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 25px 60px rgba(0,0,0,0.6);}
-        .upload-area{border:3px dashed var(--accent);border-radius:24px;padding:60px;text-align:center;cursor:pointer;transition:0.4s;margin-bottom:30px;}
-        .upload-area:hover{background:rgba(139,92,246,0.15);border-color:#c084fc;}
-        .upload-area h3{font-size:1.8rem;margin-bottom:10px;}
-        input[type="file"]{display:none;}
-        .file-name{margin-top:15px;font-size:1.1rem;opacity:0.8;}
-        .controls{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:35px 0;}
-        .btn{background:var(--accent);padding:18px 40px;border-radius:50px;cursor:pointer;font-weight:700;font-size:1.1rem;transition:0.4s;}
-        .btn.stop{background:#ef4444;}.btn.restart{background:#f59e0b;}.btn.clear{background:#64748b;}
-        .btn:hover{transform:scale(1.08);box-shadow:0 15px 35px var(--glow);}
-        .status{text-align:center;font-size:1.4rem;font-weight:700;margin:25px 0;}
+        .dash{background:var(--card);border-radius:24px;padding:30px;border:1px solid rgba(255,255,255,0.08);box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+        .upload{border:2px dashed var(--accent);border-radius:20px;padding:50px;text-align:center;cursor:pointer;transition:0.4s;margin-bottom:30px;}
+        .upload:hover{background:rgba(139,92,246,0.1);}
+        .controls{display:flex;gap:15px;flex-wrap:wrap;justify-content:center;margin:30px 0;}
+        .btn{background:var(--accent);padding:16px 32px;border-radius:50px;cursor:pointer;font-weight:700;transition:0.3s;}
+        .btn.stop{background:#ef4444;}.btn.restart{background:#f59e0b;}
+        .btn:hover{transform:scale(1.05);}
+        .console{background:#000;padding:20px;height:400px;overflow-y:auto;font-family:monospace;border-radius:16px;margin-top:20px;color:#0f0;}
+        .status{text-align:center;font-size:1.2rem;font-weight:700;margin:20px 0;}
         .online{color:#10b981;}.offline{color:#ef4444;}
-        .console{background:#000;padding:25px;height:450px;overflow-y:auto;font-family:monospace;font-size:1rem;border-radius:18px;border:1px solid rgba(255,255,255,0.1);margin-top:20px;color:#0f0;}
+        .error{color:#ef4444;}
     </style>
 </head>
 <body>
     <div class="header">
         <h1>KaranZeroDay</h1>
-        <p class="subtitle">Free 24/7 Python Bot Hosting • Upload ZIP • Real Server</p>
+        <p class="subtitle">Free 24/7 Python Bot Hosting • ZIP Upload • Real Server</p>
     </div>
     <div class="container">
         <div class="dash">
-            <div class="upload-area" onclick="document.getElementById('zipfile').click()">
-                <h3>Upload Your Bot ZIP File</h3>
-                <p>Supports: main.py • bot.py • nm.py • index.py • start.py</p>
-                <input type="file" id="zipfile" accept=".zip">
-                <div class="file-name" id="filename">No file selected</div>
+            <div class="upload" onclick="document.getElementById('zipfile').click()">
+                <h3>Upload Bot ZIP (main.py / bot.py / nm.py)</h3>
+                <input type="file" id="zipfile" accept=".zip" style="display:none">
+                <p id="filename">No file selected</p>
             </div>
 
             <div class="controls">
                 <div class="btn" onclick="uploadBot()">Upload & Run</div>
-                <div class="btn stop" onclick="stopBot()">Stop Bot</div>
+                <div class="btn stop" onclick="stopBot()">Stop</div>
                 <div class="btn restart" onclick="restartBot()">Restart</div>
-                <div class="btn clear" onclick="clearConsole()">Clear Logs</div>
             </div>
 
             <div class="status">Status: <span id="status" class="offline">Offline</span></div>
-            <div class="console" id="console">
-                === KaranZeroDay Bot Hosting ===<br>
-                > Ready to host your bot 24/7<br>
-                > Upload ZIP file to start<br><br>
-            </div>
+            <div class="console" id="console">> Ready... Upload ZIP to start bot</div>
         </div>
     </div>
 
@@ -66,12 +58,14 @@
 
         fileInput.addEventListener('change', () => {
             if(fileInput.files[0]){
-                filenameEl.textContent = "Selected: " + fileInput.files[0].name;
+                filenameEl.textContent = fileInput.files[0].name;
             }
         });
 
-        function log(msg){
-            consoleEl.innerHTML += msg + "<br>";
+        function log(msg, isError = false){
+            const time = new Date().toLocaleTimeString();
+            const className = isError ? 'error' : '';
+            consoleEl.innerHTML += `<span style="color:\( {isError ? '#ef4444' : '#0f0'}">[ \){time}] ${msg}</span><br>`;
             consoleEl.scrollTop = consoleEl.scrollHeight;
         }
 
@@ -84,23 +78,37 @@
             log("Uploading ZIP file...");
             try{
                 const res = await fetch('/upload', {method:'POST', body:form});
+                if (!res.ok) {
+                    throw new Error(`HTTP \( {res.status}: \){res.statusText}`);
+                }
                 const data = await res.json();
                 if(data.success){
-                    log("Bot uploaded successfully!");
-                    log("Startup file: " + data.startup);
+                    log(`Bot uploaded! Startup: ${data.startup}`);
                     log("Bot is now RUNNING 24/7");
                     statusEl.textContent = "Online"; statusEl.className = "online";
                 }else{
-                    log("Error: " + data.error);
+                    log(`Error: ${data.error}`, true);
                 }
             }catch(e){
-                log("Upload failed: " + e.message);
+                log(`Upload failed: ${e.message}`, true);
             }
         }
 
-        async function stopBot(){ await fetch('/stop'); log("Bot stopped"); statusEl.textContent = "Offline"; statusEl.className = "offline"; }
-        async function restartBot(){ log("Restarting bot..."); await fetch('/restart'); log("Bot restarted!"); }
-        function clearConsole(){ consoleEl.innerHTML = "> Console cleared<br>"; }
+        async function stopBot(){ 
+            try{
+                await fetch('/stop');
+                log("Bot stopped");
+                statusEl.textContent = "Offline"; statusEl.className = "offline";
+            }catch(e){ log(e.message, true); }
+        }
+        async function restartBot(){ 
+            log("Restarting bot...");
+            try{
+                await fetch('/restart');
+                log("Bot restarted!");
+                statusEl.textContent = "Online"; statusEl.className = "online";
+            }catch(e){ log(e.message, true); }
+        }
     </script>
 </body>
 </html>
